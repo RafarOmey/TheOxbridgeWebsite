@@ -7,7 +7,6 @@
         </div>
     </div>
 </div>
-
 <div id="main" class="row">
     <div class="col-lg-2"></div>
     <div class="pt-5 col-lg-6">
@@ -19,25 +18,49 @@
                 <div class="row ml-5 mb-2">
                     <div class="col-xsm">
                         <input type="text" class="form-control" placeholder="Fornavn" required
-                            [(ngModel)]="user.firstname" #firstname="ngModel" name="firstname">
+                            [(ngModel)]="user.firstname" #firstname="ngModel" name="firstname" 
+                            pattern="^[a-zA-ZÆØÅæøå ]*">
+                            <div *ngIf="firstname.invalid && firstname.touched">
+                                <div *ngIf="firstname.errors.pattern">
+                                    Fornavn må kun indeholde bogstaver
+                                </div>
+                            </div>
                     </div>
                     <div>
                         <input type="text" class="form-control ml-3" placeholder="Efternavn" required
-                            [(ngModel)]="user.lastname" #lastname="ngModel" name="lastname">
+                            [(ngModel)]="user.lastname" #lastname="ngModel" name="lastname" 
+                            pattern="^[a-zA-ZÆØÅæøå ]*">
+                            <div *ngIf="lastname.invalid && lastname.touched">
+                                <div *ngIf="lastname.errors.pattern">
+                                    Efternavn må kun indeholde bogstaver
+                                </div>
+                            </div>
                     </div>
                 </div>
                 <div class="row ml-5 mb-2">
                     <div class="col-xsm">
-                        <input type="password" class="psw form-control" placeholder="Gamle adgangskode">
+                        <input type="password" class="psw form-control" placeholder="Gamle adgangskode"
+                        pattern="^(?=.*[a-zA-ZÆØÅæøå])(?=.*\d)[a-zA-ZÆØÅæøå\d]*$" minlength="8">
+                        
+                        
+                        
                     </div>
                     <div>
-                        <input type="password" class="psw form-control ml-3" placeholder="Ny adgangskode">
+                        <input type="password" class="psw form-control ml-3" placeholder="Ny adgangskode"
+                        pattern="^(?=.*[a-zA-ZÆØÅæøå])(?=.*\d)[a-zA-ZÆØÅæøå\d]*$" minlength="8">
+                        
                     </div>
                 </div>
                 <div class="row ml-5">
                     <div>
                         <input type="text" class="form-control" placeholder="Email" required
-                            [(ngModel)]="user.emailUsername" #emailUsername="ngModel" name="emailUsername">
+                            [(ngModel)]="user.emailUsername" #emailUsername="ngModel" name="emailUsername"
+                            pattern="^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$">
+                            <div *ngIf="emailUsername.invalid && emailUsername.touched">
+                                <div *ngIf="emailUsername.errors.pattern">
+                                    Ugyldig email
+                                </div>
+                            </div>
                     </div>
                     <div>
                         <button class="btn btn-outline-info ml-3" type="submit"
@@ -46,7 +69,6 @@
                 </div>
             </form>
         </div>
-
         <!-- List of ships -->
         <div class="container pt-4 ml-4" *ngFor="let ship of ships | async">
             <div class="row p-1 pb-3">
