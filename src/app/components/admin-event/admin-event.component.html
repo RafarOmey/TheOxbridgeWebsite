@@ -45,11 +45,19 @@
                         <button type="button" *ngIf="(event|async).isLive" id="eventHandler" class="btn btn-danger mr-4"
                             (click)="stopEvent()">Stop Event</button>
                         <button type="button" class="btn btn-info " routerLink="ruteplanner">{{buttonText}}</button>
+              
+                
                     </div>
+                  
                 </div>
             </form>
-        </div>
+             <!-- post message area -->
+             <textarea type="text"  class="form-control" [(ngModel)]="model2.message" #message="ngModel" 
+             name ="taMessage" placeholder="enter message" cols="30" rows="10"></textarea>
 
+             <input type="submit"  value="Send Message" (click)="postMessage()" />
+        </div>
+       
         <!-- List of participants -->
         <div class="container pb-4">
             <h4 class="pt-4">Deltagere</h4>
@@ -80,18 +88,20 @@
                     </td>
                     <td>
                         <input class="form-control" required [(ngModel)]="participant.emailUsername"
-                            #emailUsername="ngModel" name="emailUsername" disabled>
+                            #emailUsername="ngModel" name="emailUsername" id ="userEmail" disabled>
                     </td>
+                    
                     <td><button type="button" class="btn btn-outline-info"
                             (click)="editParticipant(participant)">Gem</button></td>
                     <td><button type="button" class="btn btn-info" (click)="deleteParticipant(participant)">
                             <i class="fa fa-times"></i>
                         </button></td>
+                        
                 </tr>
             </table>
         </div>
     </section>
-
+    
     <!-- Right side menu -->
     <div id="rightMenu" class="col">
         <form class="form-inline p-3 pt-4">

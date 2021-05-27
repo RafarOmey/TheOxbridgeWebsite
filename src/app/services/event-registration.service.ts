@@ -5,6 +5,7 @@ import { EventRegistration } from '../models/event-registration';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { Participant } from '../models/participant';
+import { Message } from '../models/message'
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +17,23 @@ export class EventRegistrationService {
   private eventRegistrationUrl = 'http://localhost:3000/eventRegistrations/';
 
   constructor(private cookieService: CookieService, private http: HttpClient) { }
+
+
+ /**
+   * Sends a http post request to the backend, in order to store message for an event
+   * @param message 
+   */
+public PostMessageToDB(message : Message): Observable<Message> {
+
+  const httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+
+    })
+  }
+  //TODO make messagepost url line 36
+  return this.http.post<Message>(this.eventRegistrationUrl, message, httpOptions).pipe(map(messagePost => { return messagePost}));
+}
 
   /**
    * Sends a http post request to the backend, in order to sign up for an event
@@ -71,6 +89,8 @@ export class EventRegistrationService {
     }
     return this.http.put<Participant>(this.eventRegistrationUrl+"updateParticipant/"+participant.eventRegId, participant, httpOptions).pipe(map(participant => {return participant}));
   }
+
+
 
   /**
    * Sends a http delete request to the backend, in order to delete an participant for an event

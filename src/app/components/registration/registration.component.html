@@ -18,7 +18,10 @@
                         <div class="form-group">
                             <input type="text" class="form-control" [(ngModel)]="model.firstname" #firstname="ngModel"
                                 name="firstname" placeholder="Fornavn" pattern="^[a-zA-ZÆØÅæøå ]*" required />
-                            <div *ngIf="firstname.invalid && firstname.touched">
+                           
+                           
+                           
+                                <div *ngIf="firstname.invalid && firstname.touched">
                                 <div *ngIf="firstname.errors.required">
                                     Fornavn er nødvendig
                                 </div>

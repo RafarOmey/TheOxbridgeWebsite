@@ -2,14 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { Observable, combineLatest } from 'rxjs';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { EventService } from 'src/app/services/event.service';
-import { switchMap, tap, startWith, map } from 'rxjs/operators';
+import { switchMap, tap, startWith, map, first } from 'rxjs/operators';
 import { Event } from '../../models/event';
-import { FormGroup, FormControl, FormBuilder, Validators, NgForm } from '@angular/forms';
+import { FormGroup, FormControl, FormBuilder, Validators, NgForm, NgModel } from '@angular/forms';
 import { formatDate } from '@angular/common';
 import { Participant } from 'src/app/models/participant';
 import { EventRegistrationService } from 'src/app/services/event-registration.service';
 import { Router } from '@angular/router';
-
+import { Message } from 'src/app/models/message';
 
 @Component({
   selector: 'app-admin-event',
@@ -28,11 +28,14 @@ export class AdminEventComponent implements OnInit {
 
   eventForm: FormGroup;
   model: Participant;
-
+  model2: Message;
   buttonText: String;
   hasRoute: Observable<boolean>;
 
+  
+
   constructor(private formBuilder: FormBuilder, private route: ActivatedRoute, private eventService: EventService, private eventRegService: EventRegistrationService, private router: Router) {
+  this.model2 = new Message();
   }
 
   ngOnInit(): void {
@@ -66,13 +69,33 @@ export class AdminEventComponent implements OnInit {
     })
   }
 
+/*
+*Send a message to all particapants in the event
+* 
+*/
+evID: any;
+userEmail: any;
+
+postMessage(){
+  this.eventRegService.PostMessageToDB(this.model2).pipe(first())
+  .subscribe(message =>{
+    this.model2.eventId = this.evID;
+    
+    
+
+    
+  
+  })
+   }
+
   /**
    * Gets the participants of the event and initialize the search filter
    */
   setParticipants() {
     this.participants = this.route.paramMap.pipe(
       switchMap((params: ParamMap) =>
-        this.eventRegService.getParticipants(parseInt(params.get('eventId'))))
+        this.eventRegService.getParticipants(this.evID = parseInt(params.get('eventId'))))
+      
     )
 
     this.filter = new FormControl('');
@@ -85,7 +108,9 @@ export class AdminEventComponent implements OnInit {
         participant.shipName.toLowerCase().indexOf(filterString.toLowerCase()) !== -1 ||
         participant.teamName.toLowerCase().indexOf(filterString.toLowerCase()) !== -1 ||
         participant.emailUsername.toLowerCase().indexOf(filterString.toLowerCase()) !== -1
+        
       )));
+    
   }
 
   /**
@@ -148,6 +173,7 @@ export class AdminEventComponent implements OnInit {
           console.log(error.status);
         });
   }
+
 
   /**
    * Event handler for submitting changes to a given participants information
