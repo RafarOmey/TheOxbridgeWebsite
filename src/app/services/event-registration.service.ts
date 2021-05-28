@@ -32,7 +32,7 @@ public PostMessageToDB(message : Message): Observable<Message> {
     })
   }
   //TODO make messagepost url line 36
-  return this.http.post<Message>(this.eventRegistrationUrl, message, httpOptions).pipe(map(messagePost => { return messagePost}));
+  return this.http.post<Message>('http://localhost:3000/broadcast', message, httpOptions).pipe(map(messagePost => { return messagePost}));
 }
 
   /**

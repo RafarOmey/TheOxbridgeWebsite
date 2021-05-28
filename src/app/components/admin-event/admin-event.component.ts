@@ -31,11 +31,13 @@ export class AdminEventComponent implements OnInit {
   model2: Message;
   buttonText: String;
   hasRoute: Observable<boolean>;
+  evID: any;
 
-  
+
+
 
   constructor(private formBuilder: FormBuilder, private route: ActivatedRoute, private eventService: EventService, private eventRegService: EventRegistrationService, private router: Router) {
-  this.model2 = new Message();
+    this.model2 = new Message();
   }
 
   ngOnInit(): void {
@@ -69,24 +71,17 @@ export class AdminEventComponent implements OnInit {
     })
   }
 
-/*
-*Send a message to all particapants in the event
-* 
-*/
-evID: any;
-userEmail: any;
+  /*
+  *Send a message to all particapants in the event
+  * 
+  */
 
-postMessage(){
-  this.eventRegService.PostMessageToDB(this.model2).pipe(first())
-  .subscribe(message =>{
+
+  postMessage() {
     this.model2.eventId = this.evID;
-    
-    
-
-    
-  
-  })
-   }
+    this.eventRegService.PostMessageToDB(this.model2).pipe(first())
+      .subscribe(message => this.model2);
+  }
 
   /**
    * Gets the participants of the event and initialize the search filter
@@ -95,7 +90,7 @@ postMessage(){
     this.participants = this.route.paramMap.pipe(
       switchMap((params: ParamMap) =>
         this.eventRegService.getParticipants(this.evID = parseInt(params.get('eventId'))))
-      
+
     )
 
     this.filter = new FormControl('');
@@ -108,9 +103,9 @@ postMessage(){
         participant.shipName.toLowerCase().indexOf(filterString.toLowerCase()) !== -1 ||
         participant.teamName.toLowerCase().indexOf(filterString.toLowerCase()) !== -1 ||
         participant.emailUsername.toLowerCase().indexOf(filterString.toLowerCase()) !== -1
-        
+
       )));
-    
+
   }
 
   /**
