@@ -58,6 +58,6 @@ export class ProfileComponent implements OnInit {
    * Event handler for submitting a new ship
    */
   OnShipSubmit() {
-    this.shipService.addShip(this.model).subscribe(ship => this.setShips());
+    this.shipService.addShip(this.model,this.user.emailUsername).subscribe(ship => this.setShips());
   }
 }

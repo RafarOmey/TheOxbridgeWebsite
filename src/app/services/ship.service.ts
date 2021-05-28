@@ -4,6 +4,7 @@ import { CookieService } from 'ngx-cookie-service';
 import { Ship } from '../models/ship';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { User } from '../models/user';
 
 @Injectable({
   providedIn: 'root'
@@ -50,7 +51,7 @@ export class ShipService {
    * Sends a http post request to the backend, in order to add a ship
    * @param newShip - The new ship to be added
    */
-  public addShip(newShip: Ship): Observable<Ship>
+  public addShip(newShip: Ship,userName:string): Observable<Ship>
   {
     let user = JSON.parse(this.cookieService.get('user'));
     const httpOptions = {
@@ -59,6 +60,8 @@ export class ShipService {
         'x-access-token': user.token
       })
     }
+    newShip.emailUsername = userName;
+    
     return this.http.post<Ship>(this.shipUrl, newShip, httpOptions).pipe(map(ship => { return ship }));
   }
 }
