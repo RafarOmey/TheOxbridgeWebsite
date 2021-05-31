@@ -21,6 +21,7 @@ import { ProfileComponent } from './components/profile/profile.component';
 import { AdminEventComponent } from './components/admin-event/admin-event.component';
 import { RutePlannerComponent } from './components/rute-planner/rute-planner.component';
 import { LiveEventComponent } from './components/live-event/live-event.component';
+import { ForgotPSWComponent } from './components/forgot-psw/forgot-psw.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { LiveEventComponent } from './components/live-event/live-event.component
     ProfileComponent,
     AdminEventComponent,
     RutePlannerComponent,
-    LiveEventComponent
+    LiveEventComponent,
+    ForgotPSWComponent
   ],
   imports: [
     BrowserModule,

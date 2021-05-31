@@ -1,0 +1,14 @@
+<div class="register">
+    <div class="register-left">
+        <img src="assets/images/shipIcon.png" />
+
+        <form class="form" (ngSubmit)="OnForgot()">
+            <input class="form-control" type="text" placeholder="Email/brugernavn" [(ngModel)]="model.emailUsername"
+            name="emailUsername" #emailUsername="ngModel">
+
+                
+            <input type="submit" class="btnRegister" value="Send Ny Kode"/>
+        </form>
+
+    </div>
+</div>

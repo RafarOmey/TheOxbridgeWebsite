@@ -12,10 +12,28 @@ import { CookieService } from 'ngx-cookie-service';
 export class UserService {
 
   //private userUrl = 'https://oxbridgecloud.azurewebsites.net/users/'
-
+private forgotPassUrl = 'http://localhost:3000/forgotpass';  
   private userUrl = 'http://localhost:3000/users/';
   constructor(private http: HttpClient, private cookieService: CookieService) { }
 
+  /**
+   * Sending New Auto Generated password to user through mail.
+   * @param newUser 
+   * @returns 
+   */
+  public forgotPassword(emailUsername: User):Observable<User>{
+    
+  
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+        
+      })
+    }
+    return this.http.put<User>(this.forgotPassUrl, emailUsername, httpOptions).pipe(map(user => { return user }));
+  }
+
+  
   /**
    * Sends a http post request to the backend, in order to register as a new user
    * @param newUser - The new user to be registered
