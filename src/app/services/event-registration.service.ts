@@ -41,7 +41,7 @@ public PostMessageToDB(message : Message): Observable<Message> {
    * @param teamName 
    * @param eventCode 
    */
-  public SignUpForEvent(shipId:number, teamName:string, eventCode:string): Observable<EventRegistration> {
+  public SignUpForEvent(shipId:number, teamName:string, eventCode:string,emailUsername:string): Observable<EventRegistration> {
     let user = JSON.parse(this.cookieService.get('user'));
     const httpOptions = {
       headers: new HttpHeaders({
@@ -49,7 +49,7 @@ public PostMessageToDB(message : Message): Observable<Message> {
         'x-access-token': user.token
       })
     }
-    return this.http.post<EventRegistration>(this.eventRegistrationUrl+"signUp", {shipId, teamName, eventCode}, httpOptions).pipe(map(eventReg => { return eventReg}));
+    return this.http.post<EventRegistration>(this.eventRegistrationUrl+"signup", {shipId, teamName, eventCode,emailUsername}, httpOptions).pipe(map(eventReg => { return eventReg}));
   }
 
   /**

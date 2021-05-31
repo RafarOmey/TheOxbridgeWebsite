@@ -9,6 +9,7 @@ import { EventSignUp } from 'src/app/models/event-sign-up';
 import { Ship } from 'src/app/models/ship';
 import { ShipService } from 'src/app/services/ship.service';
 import { EventRegistrationService } from 'src/app/services/event-registration.service';
+import { User } from 'src/app/models/user';
 
 @Component({
   selector: 'app-user-dashboard',
@@ -26,12 +27,15 @@ export class UserDashboardComponent implements OnInit {
   model = new EventSignUp("", "");
   alreadySignedUp:boolean = false;
   WrongEventCode:boolean = false;
+  user:User;
 
   constructor(private eventService: EventService, private eventRegService: EventRegistrationService, private shipService: ShipService, private cookieService:CookieService) {
     this.setMyEvents();
+    
    }
 
   ngOnInit(): void {
+    this.user = JSON.parse(this.cookieService.get('user'));
   }
 
   /**
@@ -54,7 +58,7 @@ export class UserDashboardComponent implements OnInit {
    */
   OnSubmit(form: NgForm)
   {
-    this.eventRegService.SignUpForEvent(this.model.ship.shipId, this.model.teamName, this.model.eventCode).pipe()
+    this.eventRegService.SignUpForEvent(this.model.ship.shipId, this.model.teamName, this.model.eventCode,this.user.emailUsername).pipe()
     .subscribe(eventReg => {
       this.setMyEvents();
       form.reset();
