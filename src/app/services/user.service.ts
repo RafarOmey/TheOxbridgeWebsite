@@ -12,7 +12,7 @@ import { CookieService } from 'ngx-cookie-service';
 export class UserService {
 
   //private userUrl = 'https://oxbridgecloud.azurewebsites.net/users/'
-private forgotPassUrl = 'http://localhost:3000/forgotpass';  
+  private forgotPassUrl = 'http://localhost:3000/forgotpass';
   private userUrl = 'http://localhost:3000/users/';
   constructor(private http: HttpClient, private cookieService: CookieService) { }
 
@@ -21,25 +21,25 @@ private forgotPassUrl = 'http://localhost:3000/forgotpass';
    * @param newUser 
    * @returns 
    */
-  public forgotPassword(emailUsername: User):Observable<User>{
-    
-  
+  public forgotPassword(emailUsername: User): Observable<User> {
+
+
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json'
-        
+
       })
     }
     return this.http.put<User>(this.forgotPassUrl, emailUsername, httpOptions).pipe(map(user => { return user }));
   }
 
-  
+
   /**
    * Sends a http post request to the backend, in order to register as a new user
    * @param newUser - The new user to be registered
    */
   public registerUser(newUser: User): Observable<User> {
-    return this.http.post<User>(this.userUrl+"register", newUser).pipe(map(user => {
+    return this.http.post<User>(this.userUrl + "register", newUser).pipe(map(user => {
       user.role = this.getDecodedAccessToken(user.token).role;
       return user;
     }));
@@ -50,8 +50,8 @@ private forgotPassUrl = 'http://localhost:3000/forgotpass';
    * @param emailUsername - The emailUsername of the user
    * @param password - The password of the user
    */
-  public login(emailUsername:string, password:string): Observable<User> {
-    return this.http.post<User>(this.userUrl+'login', {emailUsername, password}).pipe(map(user => {
+  public login(emailUsername: string, password: string): Observable<User> {
+    return this.http.post<User>(this.userUrl + 'login', { emailUsername, password }).pipe(map(user => {
       user.role = this.getDecodedAccessToken(user.token).role;
       return user;
     }));
@@ -74,7 +74,7 @@ private forgotPassUrl = 'http://localhost:3000/forgotpass';
    * Sends a http put request to the backend, in order to update a user
    * @param newUser - The updated user
    */
-  public updateUser(newUser): Observable<User>{
+  public updateUser(newUser): Observable<User> {
     let user = JSON.parse(this.cookieService.get('user'));
     const httpOptions = {
       headers: new HttpHeaders({
@@ -82,6 +82,6 @@ private forgotPassUrl = 'http://localhost:3000/forgotpass';
         'x-access-token': user.token
       })
     }
-    return this.http.put<User>(this.userUrl+user.emailUsername, newUser, httpOptions).pipe(map(user => { return user }));
+    return this.http.put<User>(this.userUrl + user.emailUsername, newUser, httpOptions).pipe(map(user => { return user }));
   }
 }

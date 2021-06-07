@@ -47,6 +47,7 @@
                     </div>
                     <div>
                         <input type="password" class="psw form-control ml-3" placeholder="Ny adgangskode"
+                        [(ngModel)]="user.password" #password="ngModel" name="password" 
                         pattern="^(?=.*[a-zA-ZÆØÅæøå])(?=.*\d)[a-zA-ZÆØÅæøå\d]*$" minlength="8">
                         
                     </div>
