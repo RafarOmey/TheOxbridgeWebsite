@@ -38,15 +38,9 @@
                     </div>
                 </div>
                 <div class="row ml-5 mb-2">
+                    
                     <div class="col-xsm">
-                        <input type="password" class="psw form-control" placeholder="Gamle adgangskode"
-                        pattern="^(?=.*[a-zA-ZÆØÅæøå])(?=.*\d)[a-zA-ZÆØÅæøå\d]*$" minlength="8">
-                        
-                        
-                        
-                    </div>
-                    <div>
-                        <input type="password" class="psw form-control ml-3" placeholder="Ny adgangskode"
+                        <input type="password" class="form-control" placeholder="Ny adgangskode"
                         [(ngModel)]="user.password" #password="ngModel" name="password" 
                         pattern="^(?=.*[a-zA-ZÆØÅæøå])(?=.*\d)[a-zA-ZÆØÅæøå\d]*$" minlength="8">
                         <div *ngIf="password.invalid && password.touched">
