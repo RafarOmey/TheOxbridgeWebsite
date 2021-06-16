@@ -19,21 +19,21 @@ export class EventRegistrationService {
   constructor(private cookieService: CookieService, private http: HttpClient) { }
 
 
- /**
-   * Sends a http post request to the backend, in order to store message for an event
-   * @param message 
-   */
-public PostMessageToDB(message : Message): Observable<Message> {
+  /**
+    * Sends a http post request to the backend, in order to store message for an event
+    * @param message 
+    */
+  public PostMessageToDB(message: Message): Observable<Message> {
 
-  const httpOptions = {
-    headers: new HttpHeaders({
-      'Content-Type': 'application/json',
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
 
-    })
+      })
+    }
+    
+    return this.http.post<Message>('http://localhost:3000/broadcast', message, httpOptions).pipe(map(messagePost => { return messagePost }));
   }
-  //TODO make messagepost url line 36
-  return this.http.post<Message>('http://localhost:3000/broadcast', message, httpOptions).pipe(map(messagePost => { return messagePost}));
-}
 
   /**
    * Sends a http post request to the backend, in order to sign up for an event
@@ -41,7 +41,7 @@ public PostMessageToDB(message : Message): Observable<Message> {
    * @param teamName 
    * @param eventCode 
    */
-  public SignUpForEvent(shipId:number, teamName:string, eventCode:string,emailUsername:string): Observable<EventRegistration> {
+  public SignUpForEvent(shipId: number, teamName: string, eventCode: string, emailUsername: string): Observable<EventRegistration> {
     let user = JSON.parse(this.cookieService.get('user'));
     const httpOptions = {
       headers: new HttpHeaders({
@@ -49,22 +49,22 @@ public PostMessageToDB(message : Message): Observable<Message> {
         'x-access-token': user.token
       })
     }
-    return this.http.post<EventRegistration>(this.eventRegistrationUrl+"signup", {shipId, teamName, eventCode,emailUsername}, httpOptions).pipe(map(eventReg => { return eventReg}));
+    return this.http.post<EventRegistration>(this.eventRegistrationUrl + "signup", { shipId, teamName, eventCode, emailUsername }, httpOptions).pipe(map(eventReg => { return eventReg }));
   }
 
   /**
    * Sends a http get request to the backend in order to get all participants of an event and returns the respons
    * @param eventId 
    */
-  public getParticipants(eventId:Number): Observable<Participant[]>{
-    return this.http.get<Participant[]>(this.eventRegistrationUrl+"getParticipants/"+eventId).pipe(map(participants => { return participants }))
+  public getParticipants(eventId: Number): Observable<Participant[]> {
+    return this.http.get<Participant[]>(this.eventRegistrationUrl + "getParticipants/" + eventId).pipe(map(participants => { return participants }))
   }
 
   /**
    * Sends a http post request to the backend, in order to add a participant to an event
    * @param participant 
    */
-  public addParticipant(participant): Observable<Participant>{
+  public addParticipant(participant): Observable<Participant> {
     let user = JSON.parse(this.cookieService.get('user'));
     const httpOptions = {
       headers: new HttpHeaders({
@@ -72,14 +72,14 @@ public PostMessageToDB(message : Message): Observable<Message> {
         'x-access-token': user.token
       })
     }
-    return this.http.post<Participant>(this.eventRegistrationUrl+"addParticipant", participant, httpOptions).pipe(map(participant => {return participant}));
+    return this.http.post<Participant>(this.eventRegistrationUrl + "addParticipant", participant, httpOptions).pipe(map(participant => { return participant }));
   }
 
   /**
    * Sends a http put request to the backend, in order to update a participants information
    * @param participant 
    */
-  public updateParticipant(participant): Observable<Participant>{
+  public updateParticipant(participant): Observable<Participant> {
     let user = JSON.parse(this.cookieService.get('user'));
     const httpOptions = {
       headers: new HttpHeaders({
@@ -87,7 +87,7 @@ public PostMessageToDB(message : Message): Observable<Message> {
         'x-access-token': user.token
       })
     }
-    return this.http.put<Participant>(this.eventRegistrationUrl+"updateParticipant/"+participant.eventRegId, participant, httpOptions).pipe(map(participant => {return participant}));
+    return this.http.put<Participant>(this.eventRegistrationUrl + "updateParticipant/" + participant.eventRegId, participant, httpOptions).pipe(map(participant => { return participant }));
   }
 
 
@@ -96,7 +96,7 @@ public PostMessageToDB(message : Message): Observable<Message> {
    * Sends a http delete request to the backend, in order to delete an participant for an event
    * @param eventRegId 
    */
-  public deleteParticipant(eventRegId): Observable<EventRegistration>{
+  public deleteParticipant(eventRegId): Observable<EventRegistration> {
     let user = JSON.parse(this.cookieService.get('user'));
     const httpOptions = {
       headers: new HttpHeaders({
@@ -104,11 +104,10 @@ public PostMessageToDB(message : Message): Observable<Message> {
         'x-access-token': user.token
       })
     }
-    return this.http.delete<EventRegistration>(this.eventRegistrationUrl+eventRegId, httpOptions).pipe(map(eventRegistration => {return eventRegistration}));
+    return this.http.delete<EventRegistration>(this.eventRegistrationUrl + eventRegId, httpOptions).pipe(map(eventRegistration => { return eventRegistration }));
   }
 
-  public unSubscribeToEvent(eventRegId): Observable<EventRegistration>
-  {
+  public unSubscribeToEvent(eventRegId): Observable<EventRegistration> {
     let user = JSON.parse(this.cookieService.get('user'));
     const httpOptions = {
       headers: new HttpHeaders({
@@ -116,6 +115,6 @@ public PostMessageToDB(message : Message): Observable<Message> {
         'x-access-token': user.token
       })
     }
-    return this.http.delete<EventRegistration>(this.eventRegistrationUrl+eventRegId, httpOptions).pipe(map(eventReg => {return eventReg}));
+    return this.http.delete<EventRegistration>(this.eventRegistrationUrl + eventRegId, httpOptions).pipe(map(eventReg => { return eventReg }));
   }
 }
