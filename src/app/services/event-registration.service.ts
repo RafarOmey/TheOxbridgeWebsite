@@ -40,6 +40,7 @@ export class EventRegistrationService {
    * @param shipId 
    * @param teamName 
    * @param eventCode 
+   * @param emailUsername
    */
   public SignUpForEvent(shipId: number, teamName: string, eventCode: string, emailUsername: string): Observable<EventRegistration> {
     let user = JSON.parse(this.cookieService.get('user'));
