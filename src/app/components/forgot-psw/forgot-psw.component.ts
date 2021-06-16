@@ -19,7 +19,7 @@ export class ForgotPSWComponent implements OnInit {
   
   ngOnInit(): void {
   }
-  
+  //Calling the Service that will make a request with the endpoint /forgotpassword sending the model.emailUsername over.
   OnForgot() {
     this.userService.forgotPassword(this.model).subscribe(participant => {
       alert("Your Password has been reset");
